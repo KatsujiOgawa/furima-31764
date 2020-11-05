@@ -2,35 +2,35 @@
 
 ## users テーブル
 
-| Column                 | Type    | Options     |
-| -----------------------| ------- | ----------- |
-| nickname               | string  | null: false |
-| email                  | string  | null: false |
-| encrypted_password     | string  | null: false |
-| first_name             | string  | null: false |
-| last_name              | string  | null: false |
-| first_name_katakana    | string  | null: false |
-| last_name_katakana     | string  | null: false |
-| year_of_birth_id       | integer | null: false |
-| month_of_birth_id      | integer | null: false |
-| day_of_birth_id        | integer | null: false |
+| Column              | Type   | Options     |
+| --------------------| ------ | ----------- |
+| nickname            | string | null: false |
+| email               | string | null: false |
+| encrypted_password  | string | null: false |
+| first_name          | string | null: false |
+| last_name           | string | null: false |
+| first_name_katakana | string | null: false |
+| last_name_katakana  | string | null: false |
+| birthday_id         | date   | null: false |
 
-### Association
+### Associationv
 
 - has_many :items
 - has_many :buys
 
 ## items テーブル
 
-| Column       | Type       | Options                        |
-| ------------ | ---------- | ------------------------------ |
-| name         | string     | null: false                    |
-| info         | text       | null: false                    |
-| price        | integer    | null: false                    |
-| category_id  | integer    | null: false                    |
-| condition_id | integer    | null: false                    |
-| user         | references | null: false, foreign_key: true |
-
+| Column            | Type       | Options                        |
+| ----------------- | ---------- | ------------------------------ |
+| name              | string     | null: false                    |
+| info              | text       | null: false                    |
+| price             | integer    | null: false                    |
+| category_id       | integer    | null: false                    |
+| condition_id      | integer    | null: false                    |
+| shipping_payer_id | integer    | null: false                    |
+| prefecture_id     | integer    | null: false                    |
+| shipping_days_id  | integer    | null: false                    |
+| user              | references | null: false, foreign_key: true |
 
 ### Association
 
