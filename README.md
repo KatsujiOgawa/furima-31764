@@ -13,7 +13,7 @@
 | last_name_katakana  | string | null: false |
 | birthday_id         | date   | null: false |
 
-### Association
+### Associationv
 
 - has_many :items
 - has_many :buys
