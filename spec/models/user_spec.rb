@@ -3,8 +3,35 @@ RSpec.describe User, type: :model do
   before do
     @user = FactoryBot.build(:user) 
   end
+
   describe 'ユーザー新規登録' do
+
     context '新規登録がうまくいくとき' do
+      it "nicknameが空欄でなければ登録できる" do
+        expect(@user).to be_valid
+      end
+      it "emailが空欄でなく、@を含み、同じemailが存在しないと登録できる" do
+        @user.email = "ogawa111ogawa@docomo.ne.jp"
+        expect(@user).to be_valid
+      end
+      it "passwordと確認用passwordが空欄でなく、半角英数混合の６文字以上で入力されていると登録できる" do
+        @user.password = "aaa111"
+        @user.password_confirmation = @user.password
+        expect(@user).to be_valid
+      end
+      it "first_nameとlast_nameが空欄ではなく、全角(ひらがな・カタカナ・漢字)であれば登録できる" do
+        @user.first_name = "かナ郎"
+        @user.last_name = "かナ山"
+        expect(@user).to be_valid
+      end
+      it "first_name_katakanaとlast_name_katakanaが空欄ではなく、全角(カタカナ)であれば登録できる" do
+        @user.first_name_katakana = "カナロウ"
+        @user.last_name_katakana = "カナヤマ"
+        expect(@user).to be_valid
+      end
+      it "birthday_idが空欄でなければ登録できる" do
+        expect(@user).to be_valid
+      end
     end
 
     context '新規登録がうまくいかないとき' do
@@ -65,8 +92,6 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
-
-      # -----------------------------------------------
       it "first_nameが空だと登録できない" do
         @user.first_name = ""
         @user.valid?
@@ -87,8 +112,6 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("First name Full-width characters")
       end
-      # --------------------------------------------------
-
       it "last_nameが空だと登録できない" do
         @user.last_name = ""
         @user.valid?
@@ -109,8 +132,6 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Last name Full-width characters")
       end
-
-      #↓名前カナ---------------------------------------------------------------
       it "first_name_katakanaが空だと登録できない" do
         @user.first_name_katakana = ""
         @user.valid?
@@ -141,9 +162,6 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("First name katakana Full-width katakana characters")
       end
-      #-------------------------------------------------------------------------
-
-      # 苗字カタカナ--------------------------------------------------------------
       it "last_nmae_katakanaが空だと登録できない" do
         @user.last_name_katakana = ""
         @user.valid?
@@ -174,13 +192,12 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Last name katakana Full-width katakana characters")
       end
-      #-------------------------------------------------------------------------
-
       it "birthday_idが空だと登録できない" do
         @user.birthday_id = ""
         @user.valid?
         expect(@user.errors.full_messages).to include("Birthday can't be blank")
       end
+      
     end
   end
 end
