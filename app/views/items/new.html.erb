@@ -6,10 +6,7 @@
   <div class="items-sell-main">
     <h2 class="items-sell-title">商品の情報を入力</h2>
     <%= form_with model: @item, url: items_path, local: true do |f| %>
-    <%# <% unless @item.save %> 
-      <%= render 'shared/error_messages', model: f.object %>
-
-    <%# 出品画像 %>
+    <%= render 'shared/error_messages', model: f.object %>
     <div class="img-upload">
       <div class="weight-bold-text">
         出品画像
