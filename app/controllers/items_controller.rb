@@ -10,13 +10,18 @@ before_action :authenticate_user! ,except: [:index]
   end
 
   def create
-    Item.create(item_params)
+    @item = Item.create(item_params)
+    if @item.save
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
   private
 
   def item_params
-    params.require(:item).permit(:name, :info, :price, :category_id, :condition_id, :shipping_payer_id, :prefecture_id, :shipping_days_id).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :image, :info, :price, :category_id, :condition_id, :shipping_payer_id, :prefecture_id, :shipping_day_id).merge(user_id: current_user.id)
   end
 
 end
