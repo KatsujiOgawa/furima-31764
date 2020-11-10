@@ -4,9 +4,10 @@ class Item < ApplicationRecord
   has_one_attached :image
 
   validates :image, presence: true
-  with_options presence: true, format: { with: /\A[0-9]+\z/, message: 'Half-width number' }, numericality: { :greater_than_or_equal_to => 300 }, numericality: { :less_than_or_equal_to => 9999999 } do
+  with_options presence: true, format: { with: /\A[0-9]+\z/} do
     validates :price
   end
+    validates :price, numericality: { greater_than_or_equal_to: 300,less_than_or_equal_to: 9999999, message: "is failed" }
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
   belongs_to :condition
