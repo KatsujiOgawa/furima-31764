@@ -10,7 +10,7 @@ before_action :authenticate_user! ,except: [:index]
   end
 
   def create
-    @item = Item.create(item_params)
+    @item = Item.new(item_params)
     if @item.save
       redirect_to root_path
     else
