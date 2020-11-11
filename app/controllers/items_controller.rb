@@ -45,8 +45,11 @@ before_action :move_index, only: [:edit]
 
   def move_index
     @item = Item.find(params[:id])
-    if current_user != @item.user
-      redirect_to action: :index
+    if user_session == nil
+      redirect_to new_user_session_path
+    elsif current_user != @item.user
+      redirect_to root_path
     end
   end
+
 end
