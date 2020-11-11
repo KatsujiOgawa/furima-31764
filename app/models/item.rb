@@ -14,6 +14,7 @@ class Item < ApplicationRecord
   belongs_to :condition
   belongs_to :shipping_payer
   belongs_to :prefecture
+  belongs_to :shipping_day
 
   with_options presence: true do
     validates :name, :info, :image
