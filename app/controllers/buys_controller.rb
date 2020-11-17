@@ -13,6 +13,7 @@ class BuysController < ApplicationController
   def create 
     @buy_shipment = BuyShipment.new(buy_params)
     if @buy_shipment.valid?
+      pay_item
       @buy_shipment.save
       redirect_to root_path
     else
@@ -42,4 +43,13 @@ class BuysController < ApplicationController
     end
   end
   
+  def pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+      Payjp::Charge.create(
+        amount: @item.price,
+        card: buy_params[:token],
+        currency: 'jpy'
+      )
+  end
+
 end
