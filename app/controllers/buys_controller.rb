@@ -12,7 +12,6 @@ class BuysController < ApplicationController
     @buy_shipment = BuyShipment.new(buy_params)
     if @buy_shipment.valid?
       @buy_shipment.save
-      binding.pry
       redirect_to root_path
     else
       render action: :index
