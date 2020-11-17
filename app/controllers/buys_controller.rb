@@ -1,6 +1,8 @@
 class BuysController < ApplicationController
+  before_action :set_item
   before_action :authenticate_user!
   before_action :seller_prevent
+  before_action :sold_out_prevent
   def index
     @buy_shipment = BuyShipment.new
   end
@@ -19,16 +21,25 @@ class BuysController < ApplicationController
   end
 
   private
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
   def buy_params
     params.require(:buy_shipment).permit(:postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id])
   end
 
   def seller_prevent
-    item = Item.find(params[:item_id])
-    if current_user.id == item.user_id
+    if current_user.id == @item.user_id
       redirect_to root_path
     end
   end
 
+  def sold_out_prevent
+    if @item.buy
+      redirect_to root_path
+    end
+  end
+  
 end
-
