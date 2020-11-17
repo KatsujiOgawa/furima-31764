@@ -1,5 +1,5 @@
 class BuysController < ApplicationController
-
+  before_action :authenticate_user!
   
   def index
     @buy_shipment = BuyShipment.new
