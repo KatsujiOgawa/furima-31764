@@ -46,7 +46,7 @@ before_action :move_index, only: [:edit, :destroy]
   end
 
   def move_index
-    if current_user != @item.user
+    if (current_user != @item.user) || @item.buy
       redirect_to root_path
     end
   end
