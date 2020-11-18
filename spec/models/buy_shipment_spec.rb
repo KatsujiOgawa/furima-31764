@@ -3,15 +3,10 @@ require 'rails_helper'
 RSpec.describe BuyShipment, type: :model do
   before do
     @user = FactoryBot.create(:user) 
-  end
-  before do
     @item = FactoryBot.create(:item) 
+    @buy_shipment = FactoryBot.build(:buy_shipment, user_id: @user.id, item_id: @item.id)
     sleep 0.3
   end
-  before do
-    @buy_shipment = FactoryBot.build(:buy_shipment, user_id: @user.id, item_id: @item.id)
-  end
-
   context "購入情報が保存できるとき" do
     it "tokenと配送情報が記入されていれば保存できる" do
       expect(@buy_shipment).to be_valid
@@ -79,8 +74,8 @@ RSpec.describe BuyShipment, type: :model do
       @buy_shipment.valid?
       expect(@buy_shipment.errors.full_messages).to include("Phone number can't be blank")
     end
-    it "phone_numberにハイフンがあると保存できない" do
-      @buy_shipment.phone_number = "045-124-678"
+    it "phone_numberがハイフンを含む12ケタ以上だと保存できない" do
+      @buy_shipment.phone_number = "045-124-6783"
       @buy_shipment.valid?
       expect(@buy_shipment.errors.full_messages).to include("Phone number is half-width number without hyphen(-)")
     end
